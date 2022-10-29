@@ -1,0 +1,14 @@
+.image {
+    max-height: 96px;
+}
+
+.img-container {
+    position: relative;
+    display: block;
+}
+
+.corner{
+    position:absolute;
+    top: 0;
+    right: 0;
+}
