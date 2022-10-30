@@ -14,7 +14,7 @@ function ImagesContainer() {
         setImages(imageList as never[]);
     };
     return (
-        <div className="overflow-auto border-r-2 border-b-2 h-1/2">
+        <div className="overflow-auto border-r-2 border-b-2 h-full">
             <ImageUploading
                 multiple
                 value={images}

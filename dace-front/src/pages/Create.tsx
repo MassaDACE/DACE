@@ -11,16 +11,20 @@ function Home() {
   return (
     <div>
       <Header />
-      <div className="grid grid-cols-5 screen">
+      <div className="grid grid-cols-5 grid-rows-2 screen">
         <div className='col-span-1'>
           <AttributeContainer />
-          <ActionsContainer />
         </div>
-        <div className='col-span-2'>
+        <div className='col-span-2 row-span-2'>
         <TimelineContainer />
         </div>
         <div className='col-span-2'>
           <PreviewContainer />
+        </div>
+        <div>
+          <ActionsContainer />
+        </div>
+        <div className='col-span-2'>
           <ImagesContainer />
         </div>
       </div>
