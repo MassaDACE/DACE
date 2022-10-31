@@ -3,7 +3,7 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 
 function AttributeContainer() {
     const [attribute, setAttribute] = React.useState("");
-    const [attributes, setAttributes] = React.useState(["test", "test2"]);
+    const [attributes, setAttributes] = React.useState(["Picture"]);
 
     const addAttribute = (e: React.KeyboardEvent) => {
         if (e.code === "Enter") {
@@ -27,7 +27,7 @@ function AttributeContainer() {
                         </div>
                     </div>
                 ))}
-                <input className="text-lg p-2 border-0 outline-0 w-fit h-10" value={attribute} onChange={(e) => setAttribute(e.target.value)} onKeyDown={addAttribute} />
+                <input placeholder="New attribute" className="text-lg p-2 border-0 outline-0 w-fit h-10" value={attribute} onChange={(e) => setAttribute(e.target.value)} onKeyDown={addAttribute} />
             </div>
         </div>
     )

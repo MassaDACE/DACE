@@ -1,12 +1,15 @@
 import React from "react";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import { ArrowUpTrayIcon, XCircleIcon } from '@heroicons/react/20/solid'
+import DefaultPicture from '../../../assets/default.png';
 
 import './ImagesContainer.css';
 
 function ImagesContainer() {
-    const [images, setImages] = React.useState([]);
+    const [images, setImages] = React.useState([ { dataURL: DefaultPicture }]);
     const maxNumber = 69;
+
+    console.log(images)
 
     const onChange = (imageList: ImageListType, addUpdateIndex: number[] | undefined) => {
         // data for submit
@@ -20,7 +23,7 @@ function ImagesContainer() {
                 value={images}
                 onChange={onChange}
                 maxNumber={maxNumber}
-                dataURLKey="data_url"
+                dataURLKey="dataURL"
             >
                 {({
                     onImageUpload,
@@ -32,7 +35,7 @@ function ImagesContainer() {
                         <div className="mt-5 ml-5 grid grid-cols-3 gap-4">
                             {images.map((image, index) => (
                                 <div key={index} className="img-container flex border-2 items-center justify-center w-full h-28">
-                                    <img src={image['data_url']} alt="" className="image" />
+                                    <img src={image['dataURL']} alt="" className="image border-2 border-black" />
                                     <div className="corner w-10" onClick={() => onImageRemove(index)}>
                                         <XCircleIcon className="text-red-500"/> 
                                     </div>
