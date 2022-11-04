@@ -20,7 +20,7 @@ function AttributeContainer() {
         <div className="flex border-r-2 border-b-2 h-full overflow-auto">
             <div className="flex flex-wrap content-start">
                 {attributes.map((attribute, index) => (
-                    <div className="flex place-items-center p-2 m-2 border-2 rounded-full h-10 bg-red-200">
+                    <div key={index} className="flex place-items-center p-2 m-2 border-2 rounded-full h-10 bg-red-200">
                         <span>{attribute}</span>
                         <div>
                             <XMarkIcon className="w-4 ml-2" onClick={() => removeAttribute(index)} />

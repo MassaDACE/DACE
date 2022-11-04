@@ -2,9 +2,9 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import React from "react";
 import DtPicker, { Day } from 'react-calendar-datetime-picker'
 import 'react-calendar-datetime-picker/dist/index.css'
+import Editor from "../timeline/TimelineEditor";
 
 function TimelineContainer() {
-    
     let [timeSlots, setTimeSlots] = React.useState([{ name: "At creation", open: true }, {name: "Monday 20 December 2023 12:30:00 PM", open: false}]);
     const [date, setDate] = React.useState<Day>(null)
 
@@ -28,7 +28,7 @@ function TimelineContainer() {
         <div className="border-r-2 border-b-2 h-full overflow-auto">
             {timeSlots.map((timeSlot, index) => {
                 return (
-                    <div>
+                    <div key={index}>
                         <div className="grid grid-cols-12">
                             <div className="col-span-11">{timeSlot.name}</div>
                             <div onClick={() => openTimeSlot(index)}>
@@ -38,7 +38,7 @@ function TimelineContainer() {
                         {/**Add divider */}
                         {timeSlot.open && (
                             <div className="h-96">
-                                open
+                                <Editor />
                             </div>
                         )}
                     </div>
