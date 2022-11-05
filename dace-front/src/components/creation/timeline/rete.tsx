@@ -46,9 +46,14 @@ class NumControl extends Rete.Control {
     };
   }
 
+  update() {
+
+  }
+  
   setValue(val) {
     this.props.value = val;
     this.putData(this.key, val);
+    this.update();
   }
 }
 
@@ -96,11 +101,9 @@ class AddComponent extends Rete.Component {
     var n2 = inputs["num2"].length ? inputs["num2"][0] : node.data.num2;
     var sum = n1 + n2;
     if (this.editor) {
-      let test = this.editor?.nodes.find((n) => n.id == node.id)?.controls.get("preview");
-      if (test) {
-        test.putData("preview", sum)
+      let test: any = this.editor?.nodes.find((n) => n.id == node.id)?.controls.get("preview")!;
+        test.setValue("preview", sum)
         this.editor?.nodes.find((n) => n.id == node.id)?.update()
-      }
     }
     this.outputs["num"] = sum;
   }
@@ -142,6 +145,7 @@ export async function createEditor(container) {
   editor.on(
     "process" || "nodecreated" || "noderemoved" || "connectioncreated" || "connectionremoved",
     async () => {
+      console.log("process");
       await engine.abort();
       await engine.process(editor.toJSON());
     }
