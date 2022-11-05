@@ -51,6 +51,7 @@ class NumControl extends Rete.Control {
   }
   
   setValue(val) {
+    console.log(val);
     this.props.value = val;
     this.putData(this.key, val);
     this.update();
@@ -101,9 +102,7 @@ class AddComponent extends Rete.Component {
     var n2 = inputs["num2"].length ? inputs["num2"][0] : node.data.num2;
     var sum = n1 + n2;
     if (this.editor) {
-      let test: any = this.editor?.nodes.find((n) => n.id == node.id)?.controls.get("preview")!;
-        test.setValue("preview", sum)
-        this.editor?.nodes.find((n) => n.id == node.id)?.update()
+      (this.editor?.nodes.find((n) => n.id == node.id)?.controls.get("preview")! as any).setValue(sum)
     }
     this.outputs["num"] = sum;
   }
