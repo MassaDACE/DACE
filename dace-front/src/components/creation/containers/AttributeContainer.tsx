@@ -1,16 +1,36 @@
 import React from "react";
-import { XMarkIcon } from "@heroicons/react/20/solid";
+import { ExclamationTriangleIcon, PencilSquareIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { Dialog, Transition } from '@headlessui/react'
+
+enum Type {
+    Number = "Number",
+    Address = "Address",
+    Image = "Image",
+    Text = "Text",
+}
 
 function AttributeContainer() {
-    const [attribute, setAttribute] = React.useState("");
-    const [attributes, setAttributes] = React.useState(["Picture"]);
+    const [open, setOpen] = React.useState(false)
+    const createButtonRef = React.useRef(null)
+    const [attribute, setAttribute] = React.useState({ name: "", type: Type.Text, value: "" });
+    const [attributes, setAttributes] = React.useState([{ name: "Picture", type: Type.Image, value: "testlolololefouvhriuhrviuhrviurvhiurvhiruhriuvhr" }]);
 
-    const addAttribute = (e: React.KeyboardEvent) => {
-        if (e.code === "Enter") {
-            setAttribute("");
-            setAttributes([...attributes, attribute]);
-        }
+    const changeTempName = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAttribute({ ...attribute, name: e.target.value });
     };
+
+    const changeTempType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setAttribute({ ...attribute, type: e.target.value as Type });
+    };
+
+    const changeTempValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAttribute({ ...attribute, value: e.target.value });
+    };
+
+    const addAttribute = () => {
+        setAttributes([...attributes, attribute]);
+        setOpen(false);
+    }
 
     const removeAttribute = (index: number) => {
         setAttributes(attributes.filter((_, i) => i !== index));
@@ -18,16 +38,116 @@ function AttributeContainer() {
 
     return (
         <div className="flex border-r-2 border-b-2 h-full overflow-auto">
-            <div className="flex flex-wrap content-start">
+
+            <Transition.Root show={open} as={React.Fragment}>
+                <Dialog as="div" className="relative z-10" initialFocus={createButtonRef} onClose={setOpen}>
+                    <Transition.Child
+                        as={React.Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 z-10 overflow-y-auto">
+                        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                            <Transition.Child
+                                as={React.Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                            >
+                                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                    <div className="flex justify-center pb-8 pt-4">
+                                        Create your attribute
+                                    </div>
+                                    <div className="flex py-4">
+                                        <div className="px-4">
+                                            Name:
+                                        </div>
+                                        <div>
+                                            <input className="border-2 rounded" onChange={(e) => changeTempName(e)} type="text" />
+                                        </div>
+                                    </div>
+                                    <div className="flex py-4">
+                                        <div className="px-4">
+                                            Type:
+                                        </div>
+                                        <select onChange={(e) => changeTempType(e)}>
+                                            {
+                                            Object.keys(Type).map(key => (
+                                                <option
+                                                    aria-selected="true"
+                                                    key={Type[key]}
+                                                    value={Type[key]}
+                                                >
+                                                    {Type[key]}
+                                                </option>
+                                                )
+                                            )
+                                            }
+                                        </select>
+                                    </div>
+                                    <div className="flex py-4">
+                                        <div className="px-4">
+                                            Default value:
+                                        </div>
+                                        <div>
+                                            <input className="border-2 rounded" onChange={(e) => changeTempValue(e)} type="text" />
+                                        </div>
+                                    </div>
+                                    <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                        <button
+                                            type="button"
+                                            className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                            onClick={() => addAttribute()}
+                                            ref={createButtonRef}
+                                        >
+                                            Create Attribute
+                                        </button>
+                                    </div>
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition.Root>
+
+            <div className="w-full mx-4">
+                <div key={"menu"} className="flex justify-between">
+                    <div>
+                        Name
+                    </div>
+                    <div>
+                        Default value
+                    </div>
+                    <div>
+                    </div>
+                </div>
                 {attributes.map((attribute, index) => (
-                    <div key={index} className="flex place-items-center p-2 m-2 border-2 rounded-full h-10 bg-red-200">
-                        <span>{attribute}</span>
+                    <div key={index} className="flex justify-between">
                         <div>
-                            <XMarkIcon className="w-4 ml-2" onClick={() => removeAttribute(index)} />
+                            {attribute.name}
+                        </div>
+                        <div>
+                            {attribute.value.length > 20 ? attribute.value.substring(0, 20) + "..." : attribute.value}
+                        </div>
+                        <div className="flex">
+                            <PencilSquareIcon className="w-4" />
+                            <XMarkIcon className="w-4" onClick={() => removeAttribute(index)} />
                         </div>
                     </div>
                 ))}
-                <input placeholder="New attribute" className="text-lg p-2 border-0 outline-0 w-fit h-10" value={attribute} onChange={(e) => setAttribute(e.target.value)} onKeyDown={addAttribute} />
+                <div className="flex justify-center">
+                    <button className="bg-red-400 border-2 rounded-full px-4 py-2" onClick={() => {setOpen(true)}}> Add new attribute</button>
+                </div>
             </div>
         </div>
     )

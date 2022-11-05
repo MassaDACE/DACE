@@ -14,7 +14,6 @@ export class MyNode extends Node {
   render() {
     const { node, bindSocket, bindControl } = this.props;
     const { outputs, controls, inputs, selected } = this.state;
-    console.log("RENDER", this);
 
     return (
       <div className={`node ${selected}`} style={{ background: "grey" }}>

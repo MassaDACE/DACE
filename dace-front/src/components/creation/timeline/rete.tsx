@@ -102,7 +102,7 @@ class AddComponent extends Rete.Component {
     var n2 = inputs["num2"].length ? inputs["num2"][0] : node.data.num2;
     var sum = n1 + n2;
     if (this.editor) {
-      (this.editor?.nodes.find((n) => n.id == node.id)?.controls.get("preview")! as any).setValue(sum)
+      (this.editor?.nodes.find((n) => n.id == node.id)?.controls.get("preview")! as NumControl).setValue(sum)
     }
     this.outputs["num"] = sum;
   }
