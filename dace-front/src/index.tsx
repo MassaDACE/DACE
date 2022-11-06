@@ -6,6 +6,7 @@ import Create from './pages/Create';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Test from './pages/Test';
+import { BearbyProvider } from '@hicaru/bearby-react';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    <BearbyProvider>
      <RouterProvider router={router} />
+     </BearbyProvider>
     </React.StrictMode>
 );
 

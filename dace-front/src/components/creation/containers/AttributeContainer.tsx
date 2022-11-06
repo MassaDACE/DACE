@@ -53,7 +53,6 @@ function AttributeContainer() {
         setOpen(false);
     }
 
-
     const removeAttribute = (index: number) => {
         setAttributes(attributes.filter((_, i) => i !== index));
     };

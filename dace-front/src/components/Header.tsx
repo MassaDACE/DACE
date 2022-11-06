@@ -1,7 +1,11 @@
 import { Popover } from '@headlessui/react'
 import './Header.css';
+import { useBearby } from '@hicaru/bearby-react';
 
 export default function Header() {
+
+  const { connected, enabled, wallet, massa, contract, base58, net, period } = useBearby();
+
   return (
     <Popover className="relative bg-white header">
       <div>
@@ -20,12 +24,15 @@ export default function Header() {
             <a href="/create" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
               Create
             </a>
-            <a
-              href="#"
+            {connected  ? 
+            <div className='ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 mr-5'>
+              {String(base58)}
+            </div> : <a
+              onClick={() => wallet.connect()}
               className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 mr-5"
             >
               Connect
-            </a>
+            </a> }
           </div>
         </div>
       </div>
