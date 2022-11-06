@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.4.5",
     "@hicaru/bearby-react": "^0.2.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -11,6 +12,10 @@
     "@types/node": "^16.11.65",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.6",
+    "assemblyscript": "^0.22.0",
+    "browserify-fs": "^1.0.0",
+    "buffer": "^6.0.3",
+    "path-browserify": "^1.0.1",
     "react": "^18.2.0",
     "react-calendar-datetime-picker": "^1.6.3",
     "react-dom": "^18.2.0",
@@ -22,13 +27,16 @@
     "rete-connection-plugin": "^0.9.0",
     "rete-context-menu-plugin-react": "^0.0.8",
     "rete-react-render-plugin": "^0.3.0",
+    "stream-browserify": "^3.0.0",
     "typescript": "^4.8.4",
+    "url": "^0.11.0",
+    "util": "^0.12.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
