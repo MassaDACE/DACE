@@ -2,11 +2,14 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/20/solid";
 import React from "react";
 import DtPicker, { Day } from 'react-calendar-datetime-picker'
 import 'react-calendar-datetime-picker/dist/index.css'
+import Compile from "../Compiler";
 import Editor from "../timeline/TimelineEditor";
+import { useBearby } from '@hicaru/bearby-react';
 
 function TimelineContainer() {
     let [timeSlots, setTimeSlots] = React.useState([{ name: "At creation", open: true }, {name: "Monday 20 December 2023 12:30:00 PM", open: false}]);
-    const [date, setDate] = React.useState<Day>(null)
+    const [date, setDate] = React.useState<Day>(null);
+    const { connected, enabled, contract } = useBearby();
 
     const openTimeSlot = (index: number) => {
         setTimeSlots(timeSlots.map((timeSlot, i) => {
@@ -46,9 +49,23 @@ function TimelineContainer() {
             })}
             <div className="flex justify-center">
                 <div className="grid grid-cols-2">
-                    <div><DtPicker onChange={setDate} withTime={true} showTimeInput={true} /></div>
+                    <div>
+                        <DtPicker onChange={setDate} withTime={true} showTimeInput={true} />
+                    </div>
                     <button className="bg-red-400 border-2 rounded-full px-4 py-2" onClick={() => addNewTimeSlot()}> Add new timeslot</button>
+                    <button className="bg-red-400 border-2 rounded-full px-4 py-2" onClick={async () => {
+                        let scData = (await Compile()).binary;
+                        if (connected && enabled && scData) {
+                            console.log(await contract.deploy({
+                                fee: 0,
+                                maxGas: 2000000,
+                                gasPrice: 0,
+                                contractDataBase64: Buffer.from(scData).toString('base64')
+                            }));
+                        }
+                    }}> Mint</button>
                 </div>
+
             </div>
         </div>
     )
